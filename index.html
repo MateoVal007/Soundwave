@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soundwave</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        img {
+            height: 200px;
+            width: 150px;
+            
+        }
+        .img1{
+            padding: 4px;
+        }
+        .entrada{
+            text-decoration: none;
+            height: 20px;
+            color: white;
+            display: flex;
+            align-items: stretch;
+           padding-right: 2px;
+           font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .entrada:hover{
+            transform: scale(1.1);
+            color: cornsilk;
+        }
+        #busq:hover{
+            background-color: #444444;
+        }
+        .entrada:hover{
+            background-color: #333333;
+        }
+        .navbar {
+            background-color: #1c1c1c;
+        }
+        .navbar-brand, .nav-link, .btn {
+            color: #ffffff;
+        }
+        .btn-outline-success {
+            color: white;
+            background-color: #767977;
+        }
+        .btn-outline-success:hover {
+            background-color: grey;
+            color: #ffffff;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: none;
+        }
+        .card img {
+            border-radius: 8px;
+        }
+        .card-title {
+            color: #ffffff;
+        }
+        .card-title:hover {
+            text-decoration: underline;
+        }
+        .card-text {
+            color: #b3b3b3;
+        }
+        .card:hover{
+            background-color: #484d4a;
+        }
+        .section-title {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .home-button {
+            background-color: #1e1e1e;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .home-button:hover {
+            transform: scale(1.1);
+        }
+
+        .home-button img {
+            width: 35px;
+            height: 30px;
+            filter: invert(100%);
+
+        }
+        .create-playlist-card {
+            background-color: #1e1e1e;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .create-playlist-card h5 {
+            color: #ffffff;
+        }
+        .create-playlist-card p {
+            color: #b3b3b3;
+        }
+        .create-playlist-card button {
+            background-color: #767977;
+            color: #ffffff;
+            border: none;
+        }
+        .create-playlist-card button:hover {
+            background-color: grey;
+        }
+        a{
+            text-decoration: none;
+        }
+
+        /* Estilos del formulario */
+        .playlist-form {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            color: #ffffff;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            z-index: 1000;
+        }
+        .playlist-form input, .playlist-form textarea {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #444444;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+        }
+        .playlist-form button {
+            background-color: #767977;
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .playlist-form button:hover {
+            background-color: grey;
+        }
+
+        /* Estilo para el botón de cerrar */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #ffffff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Estilo para el fondo oscuro que cubre la página */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        @media only screen and (min-width: 1000px) {
+            #busq {
+                width: 100px;
+            }
+
+        }
+    </style>
+</head>
+<header>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <img class="img1" src="imagenes/soundwave.png" alt="Soundwave Logo" style="height: 50px; width: 50px;">
+            <a class="home-button" href="index.html">
+                <img src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-home-vector-icon-png-image_4236634.jpg" alt="Home">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="background-color: gray;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="d-flex justify-content-center w-100">
+                    <form class="d-flex" role="search">
+                         <div class="container-fluid">
+                            <input id="busq" class="form-control me-2" type="search" placeholder="Buscar canciones, artistas o playlists" aria-label="Search" style="width: 320px;">
+                        </div>
+                            <button id="Bot_busq" class="btn btn-outline-success" type="submit">Buscar</button>
+                         
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+    <div class="container">
+        <h3 class="section-title">Artistas Destacados</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            
+            <div class="col">
+                <a href="joji.html" class="text-decoration-none">
+                  <div class="card" >
+                    <img src="imagenes/jojipfp2.jpg" class="card-img-top" alt="Junior H">
+                    <div class="card-body">
+                      <h5 class="card-title">Joji</h5>
+                      <p class="card-text">Artista</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              
+     
+        
+            <div class="col">
+                <a href="currentjoys.html" class="text-decoration-none">
+                  <div class="card">
+                    <img src="imagenes/current joys.jpg" class="card-img-top" >
+                    <div class="card-body">
+                      <h5 class="card-title">Current Joys</h5>
+                      <p class="card-text">Artista</p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              
+        </a>
+        <a href="mjackson.html">
+        <div class="col">
+            <div class="card">
+                <img src="imagenes/mj.jpg" class="card-img-top" alt="Himnos Rancheros">
+                <div class="card-body">
+                    <h5 class="card-title">Michael Jackson</h5>
+                    <p class="card-text">Artista</p>
+                </div>
+            </div>
+        </div>
+        </a>
+        <a href="eminem.html">
+        <div class="col">
+            <div class="card">
+                <img src="imagenes/eminem.jpg" class="card-img-top" alt="Old-School Reggaeton">
+                <div class="card-body">
+                    <h5 class="card-title">Eminem</h5>
+                    <p class="card-text">Artista</p>
+                </div>
+            </div>
+        </div>
+        </a>
+        <a href="vicente.html">
+        <div class="col">
+            <div class="card">
+                <img src="imagenes/vicentfr.jpg" class="card-img-top" alt="Cumbia Colombiana">
+                <div class="card-body">
+                    <h5 class="card-title">Vicente Fernandez</h5>
+                    <p class="card-text">Artista</p>
+                </div>
+            </div>
+        </div>
+        </a>
+        <a href="edmaverick.html">
+            <div class="col">
+                
+                <div class="card" href="edmaverick.html">
+                    <img src="imagenes/edmavpfp.jpeg" class="card-img-top" alt="Himnos del Rock">
+                    <div class="card-body">
+                        <h5 class="card-title">Ed Maverick</h5>
+                        <p class="card-text">Artista</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+
+        <h3 class="section-title mt-5">Crear Playlist</h3>
+        <div class="playlist-container" id="playlist-container"></div>
+        <div class="create-playlist-card">
+            <h5>¡Crea tu propia playlist!</h5>
+            <p>Organiza tus canciones favoritas y comparte con tus amigos.</p>
+            <button class="btn" id="crearPlaylistBtn">Crear Playlist</button>
+        </div>
+    </div>
+
+    <!-- Fondo oscuro cuando el formulario se muestra -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Formulario de creación de Playlist -->
+    <div class="playlist-form" id="playlistForm">
+        <span class="close-btn" id="closeForm">&times;</span>
+        <h4>Crear nueva playlist</h4>
+        <form id="formPlaylist">
+            <div class="mb-3">
+                <label for="playlistName" class="form-label">Nombre de la Playlist</label>
+                <input type="text" class="form-control" id="playlistName" required>
+            </div>
+            <div class="mb-3">
+                <label for="playlistDescription" class="form-label">Descripción</label>
+                <textarea class="form-control" id="playlistDescription" rows="3"></textarea>
+            </div>
+            <button type="submit" id="savePlaylistBtn" class="btn">Crear Playlist</button>
+        </form>
+    </div>
+    <br><br>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+// Función para mostrar el formulario de creación de playlist
+document.getElementById('crearPlaylistBtn').addEventListener('click', function () {
+    document.getElementById('playlistForm').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+});
+
+// Función para cerrar el formulario de creación de playlist
+document.getElementById('closeForm').addEventListener('click', function () {
+    document.getElementById('playlistForm').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+});
+document.getElementById('formPlaylist').addEventListener('submit', function (event) {
+    event.preventDefault(); 
+
+    // Obtener valores del formulario
+    const playlistName = document.getElementById('playlistName').value;
+    const playlistDescription = document.getElementById('playlistDescription').value;
+    const imgNumber = Math.floor(Math.random() * 6) + 1;
+    const imageNames = ['afternoon.jpg', 'desert.jpg', 'fall.jpg', 'night.jpg', 'sh.jpg', 'winter.jpg'];
+     const playlistImage = `fotos_playlist/${imageNames[imgNumber - 1]}`; // Cambia la ruta según tus imágenes
+    window.location.href = `playlist.html?name=${encodeURIComponent(playlistName)}&desc=${encodeURIComponent(playlistDescription)}&img=${imgNumber}`;
+    
+    const newPlaylist = {
+        name: playlistName,
+        description: playlistDescription,
+        image: imgNumber,
+        images:playlistImage
+    };
+
+    // Guardar la playlist en localStorage
+    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    playlists.push(newPlaylist);
+
+    localStorage.setItem('playlists', JSON.stringify(playlists));
+    document.getElementById('playlistName').value = '';
+    document.getElementById('playlistDescription').value = '';
+    document.getElementById('playlistForm').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+
+    // Recargar las playlists para mostrar la nueva
+    loadPlaylists();
+});
+
+// Función para cargar y mostrar las playlists desde localStorage
+function loadPlaylists() {
+    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+    const playlistContainer = document.getElementById('playlist-container');
+    playlistContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevas tarjetas
+    // Agregar las clases de fila (row) y espacio entre tarjetas (gap)
+    playlistContainer.className = 'row g-3';
+    playlists.forEach(playlist => {
+        const newCard = document.createElement('div');
+        newCard.classList.add('col-md-4'); // 3 tarjetas por fila en pantallas medianas y más grandes
+        newCard.innerHTML = `
+            <div class="card clickable-card">
+                <img id="card_img" src="${playlist.images}" class="card-img-top" alt="Imagen de la playlist">
+                <div class="card-body">
+                    <h5 class="card-title">${playlist.name}</h5>
+                    <p class="card-text">${playlist.description}</p>
+                </div>
+            </div>
+        <br><br>
+        `; 
+        newCard.addEventListener('click', () => {
+            const urlParams = new URLSearchParams({
+                name: encodeURIComponent(playlist.name),
+                desc: encodeURIComponent(playlist.description),
+                img: encodeURIComponent(playlist.image),
+            });
+            window.location.href = `playlist.html?${urlParams.toString()}`;
+        });
+
+        playlistContainer.appendChild(newCard);
+    });
+}
+
+function createPlaylist() {
+    const playlistName = document.getElementById('playlist-name').value;
+    const playlistDescription = document.getElementById('playlist-description').value;
+    const playlistImage = document.getElementById('playlist-image').value;
+
+    if (!playlistName || !playlistDescription || !playlistImage) {
+        alert('Por favor, completa todos los campos para crear una playlist.');
+        return;
+    }
+
+    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
+
+    const newPlaylist = {
+        name: playlistName,
+        description: playlistDescription,
+        image: playlistImage,
+    };
+
+}
+document.addEventListener("DOMContentLoaded", function() {
+    const artistCards = document.querySelectorAll('.card'); 
+
+    artistCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const artistName = card.getAttribute('data-artist'); // Obtener el nombre del artista desde el atributo data-artist
+            window.location.href = `playlist.html?artista=${artistName}`; // Redirigir a la página playlist.html con el parámetro
+        });
+    });
+});
+
+document.getElementById('Bot_busq').addEventListener('click', function () {
+    const searchInput = document.getElementById('busq').value.toLowerCase(); // Valor del input
+    const cards = document.querySelectorAll('.card'); // Seleccionar todas las tarjetas
+    let found = false;
+    cards.forEach(card => {
+        const cardTitle = card.querySelector('.card-title').textContent.toLowerCase(); // Título de la tarjeta
+
+        if (cardTitle.includes(searchInput) && !(searchInput === '')) { // Si el título contiene la búsqueda
+            found = true;
+            // Desplazarse hacia la tarjeta
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.style.outline = '3px solid #ff9800'; // Borde naranja para destacar  
+        }
+    });
+
+    // Si no se encuentra ninguna coincidencia
+    if (!found) {
+        alert('No se encontró ninguna tarjeta con ese nombre.');
+    }
+    if (searchInput === '') {
+    alert('Por favor, ingresa un término de búsqueda.');
+    return;
+}
+});
+
+// Cargar las playlists al cargar la página
+document.addEventListener('DOMContentLoaded', loadPlaylists);
+
+    </script>
+</body>
+<footer>
+    <span class="placeholder col-12 placeholder-xs"></span>
+    <br><br>
+    <p>&copy; © 2024 Soundwave. Todos los derechos reservados.</p>
+    <h3>Contactanos por correo:</h3>
+                vsm0035154@est.univalle.edu -
+                saa0035132@est.univalle.edu
+    <h3>Para mas informacion, puede contactarnos por nuestros numeros telefonicos:</h3>
+    <p>72704705 - 67550090</p>
+</footer>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #1c1c1c;
+            border-bottom: 1px solid #333333;
+        }
+
+        .header img {
+            height: 50px;
+           
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+        }
+        .home-button {
+            background-color: #1e1e1e;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .home-button:hover {
+            transform: scale(1.1);
+        }
+
+        .home-button img {
+            width: 35px;
+            height: 30px;
+            filter: invert(100%);
+
+        }
+
+        .playlist-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 40px 20px;
+            background-color: #1e1e1e;
+        }
+
+        .playlist-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+        }
+
+        .playlist-details {
+            flex: 1;
+        }
+
+        .playlist-details h2 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .playlist-details p {
+            margin: 10px 0;
+            color: #b3b3b3;
+        }
+
+        .btn-add {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #767977;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-add:hover {
+            background-color: #444444;
+        }
+
+        .songs-section {
+            padding: 20px;
+        }
+
+        .songs-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333333;
+            padding-bottom: 10px;
+        }
+
+        .song-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .song-card:hover {
+            background-color: #333333;
+        }
+
+        .song-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+        }
+
+        .song-card div {
+            flex: 1;
+        }
+
+        .song-card h5 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .song-card p {
+            margin: 0;
+            color: #b3b3b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1c1c1c;
+            border-top: 1px solid #333333;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+            color: #b3b3b3;
+        }
+    </style>
+</head>
+<header class="header">
+    <img src="imagenes/soundwave.png" alt="Logo">
+    <h1>Soundwave</h1>
+    <a class="home-button" href="index.html">
+        <img src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-home-vector-icon-png-image_4236634.jpg" alt="Home">
+    </a>
+</header>
+
+<body>
+    <div class="playlist-header">
+        <img id="playlistImage" src="" alt="Playlist Cover">
+        <div class="playlist-details">
+            <h2 id="playlistTitle"></h2>
+            <p id="playlistDescription"></p>
+            <a href="lista_canciones.html" class="btn-add">Agregar más canciones</a>
+
+        </div>
+    </div>
+
+    <div class="songs-section">
+        <h3>Tus Canciones</h3>
+        <!-- Aquí puedes añadir canciones dinámicamente si lo deseas -->
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Soundwave. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Lista de imágenes disponibles
+        const imageNames = ['afternoon.jpg', 'desert.jpg', 'fall.jpg', 'night.jpg', 'sh.jpg', 'winter.jpg'];
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name');
+        const desc = params.get('desc');
+        const imgIndex = params.get('img');
+
+        // Asignar los valores obtenidos de la URL
+        document.getElementById('playlistTitle').textContent = name;
+        document.getElementById('playlistDescription').textContent = desc;
+
+        // Seleccionar la imagen basada en el índice y la lista
+        if (imgIndex >= 1 && imgIndex <= imageNames.length) {
+            document.getElementById('playlistImage').src = `fotos_playlist/${imageNames[imgIndex - 1]}`;
+        } else {
+            // Imagen por defecto si el índice no es válido
+            document.getElementById('playlistImage').src = 'fotos_playlist/default.jpg';
+        }
+        function cargarPlaylist() {
+        const playlist = JSON.parse(localStorage.getItem('playlist')) || [];
+
+        // Obtener el contenedor donde se mostrarán las canciones
+        const songsSection = document.querySelector('.songs-section');
+        const params = new URLSearchParams(window.location.search);
+        const nombrePlaylist = params.get('playlist'); // Asegúrate de pasar el nombre de la playlist en la URL
+        // Si hay canciones guardadas, agregarlas a la lista
+        if (playlist.length > 0) {
+            playlist.forEach(song => {
+                // Crear el HTML de cada canción
+                const songCard = document.createElement('div');
+                songCard.classList.add('song-card');
+
+                songCard.innerHTML = `
+                    <img src="${song.image}" alt="${song.name}">
+                    <div>
+                        <h5>${song.name}</h5>
+                        <p>${song.artist}</p>
+                        <audio controls>
+                            <source src="${song.mp3}" type="audio/mp3">
+                            <source src="${song.mp4}" type="video/mp4">
+                            Tu navegador no soporta el elemento de audio.
+                        </audio>
+                    </div>
+                `;
+
+                // Agregar la canción al contenedor
+                songsSection.appendChild(songCard);
+            });
+        } else {
+            // Si no hay canciones, mostrar un mensaje
+            songsSection.innerHTML = "<p>No has añadido canciones aún.</p>";
+        }
+    }
+    
+
+    // Llamar a la función para cargar la playlist al cargar la página
+    window.onload = cargarPlaylist;
+    // playlist.js
+
+    document.addEventListener("DOMContentLoaded", function () {
+    // Obtener el parámetro 'artista' de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const artist = urlParams.get('artista');  // Obtener el nombre del artista desde la URL
+
+    // Verificar si el artista existe en los datos
+    const artistData = artistsData[artist];
+
+    if (artistData) {
+        // Si el artista existe, actualizar la página con la información
+        document.querySelector('.imagen_artista').src = artistData.image;
+        document.querySelector('.nombre_artista').textContent = artistData.name;
+        document.querySelector('.descripcion_artista').textContent = artistData.description;
+    } else {
+        // Si no se encuentra el artista, mostrar un mensaje por defecto
+        // document.querySelector('.nombre_artista').textContent = "Artista no encontrado";
+        // document.querySelector('.imagen_artista').src = ''; // O poner una imagen por defecto
+        // document.querySelector('.descripcion_artista').textContent = '';
+    }
+});
+function guardarCancionEnPlaylist(nombrePlaylist, cancion) {
+    // Obtener las canciones existentes de la playlist
+    let playlist = JSON.parse(localStorage.getItem(nombrePlaylist)) || [];
+   
+    playlist.push(cancion);
+    localStorage.setItem(nombrePlaylist, JSON.stringify(playlist));
+}
+    </script>
+</body>
+</html>
